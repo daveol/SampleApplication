@@ -26,8 +26,3 @@ jobs:
         uses: daveol/setup-android@master
 
       - run:  ./gradlew build
-
-      - run: |
-          rm -rf ~/.android
-          rm -rf ~/.gradle
-          rm -rf ~/android
