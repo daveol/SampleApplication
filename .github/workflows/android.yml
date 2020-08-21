@@ -22,7 +22,25 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Setup Android SDK
-        uses: daveol/setup-android@master
+      - name: Cache gradle directories
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle
+            ./.gradle
+          key: gradle-${{ hashFiles('gradle/wrapper/**') }}
 
-      - run:  ./gradlew build
+      - name: Cache android build artifacts
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.android
+            ./build
+            ./**/build
+          key: android-${{ github.sha }}
+
+      - run: env
+
+      - run: ls ${ANDROID_SDK_ROOT}/licenses
+
+      - run:  ./gradlew --no-daemon build
